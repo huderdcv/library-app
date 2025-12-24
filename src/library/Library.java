@@ -8,7 +8,15 @@ public class Library {
 
   public Library(ArrayList<Book> books) {
     this.books = books;
-    totalBooks = books.size();
+    if (books.size() <= 0) {
+      totalBooks = 0;
+    } else {
+      int countBooks = 0;
+      for (Book book : books) {
+        countBooks += book.getStock();
+      }
+      totalBooks = countBooks;
+    }
   }
 
   // getters
@@ -24,17 +32,26 @@ public class Library {
   // methods
   public void addBook(Book book) {
     this.books.add(book);
+    totalBooks += book.getStock();
   }
 
   public Book lendBook(String bookId) {
-    Book removedBook = null;
+    Book lendBook = null;
     for (int index = 0; index < this.books.size(); index++) {
-      if (((books.get(index)).getId()).equals(bookId)) {
-        removedBook = books.remove(index);
-        break;
+      Book currentBook = books.get(index);
+      if (((currentBook).getId()).equals(bookId)) {
+        if (currentBook.getStock() <= 0) {
+          System.out.println("There is not stock available!!");
+          break;
+        } else {
+          lendBook = currentBook;
+          totalBooks-=1;
+          currentBook.setStock(currentBook.getStock() - 1);
+          break;
+        }
       }
     }
-    return removedBook;
+    return lendBook;
   }
 
   public Book searchBook(String bookId) {

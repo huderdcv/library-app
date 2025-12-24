@@ -18,7 +18,10 @@ public class LibraryApp {
     do {
       showMenu();
       option = getUserOption();
+      scanner.nextLine();
       handleOptions(option);
+      System.out.println("Press enter to continue...");
+      scanner.nextLine();
     } while (option != 5);
   }
 
@@ -29,6 +32,7 @@ public class LibraryApp {
     System.out.println("3. Lend a book by ID");
     System.out.println("4. Show books");
     System.out.println("5. Exit");
+    System.out.println("Total of books: " + Library.getTotalBooks());
   }
 
   private int getUserOption() {
